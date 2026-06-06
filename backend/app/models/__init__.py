@@ -10,6 +10,7 @@ from app.models.resume import Resume
 from app.models.recording import InterviewRecording
 from app.models.question import InterviewQuestion
 from app.models.interview_guide import InterviewGuide
+from app.models.interview import InterviewSession, InterviewTurn
 from app.models.agent_log import AgentLog
 
 __all__ = [
@@ -21,5 +22,7 @@ __all__ = [
     "InterviewRecording",
     "InterviewQuestion",
     "InterviewGuide",
+    "InterviewSession",
+    "InterviewTurn",
     "AgentLog",
 ]

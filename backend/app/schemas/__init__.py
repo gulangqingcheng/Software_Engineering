@@ -29,6 +29,14 @@ from app.schemas.recording import (
     RecordingAnalysisResponse,
     RecordingListResponse,
 )
+from app.schemas.interview import (
+    InterviewAnswerRequest,
+    InterviewReportResponse,
+    InterviewSessionCreateRequest,
+    InterviewSessionDetailResponse,
+    InterviewSessionResponse,
+    InterviewTurnResponse,
+)
 
 __all__ = [
     # 通用
@@ -57,4 +65,11 @@ __all__ = [
     "RecordingResponse",
     "RecordingAnalysisResponse",
     "RecordingListResponse",
+    # AI 面试
+    "InterviewAnswerRequest",
+    "InterviewReportResponse",
+    "InterviewSessionCreateRequest",
+    "InterviewSessionDetailResponse",
+    "InterviewSessionResponse",
+    "InterviewTurnResponse",
 ]

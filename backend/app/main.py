@@ -16,6 +16,7 @@ from app.api import (
     admin_router,
     auth_router,
     chat_router,
+    interview_router,
     profile_router,
     question_router,
     recording_router,
@@ -29,6 +30,8 @@ from app.models import (  # noqa: F401 确保所有 ORM 模型注册到 Base.met
     InterviewGuide,
     InterviewQuestion,
     InterviewRecording,
+    InterviewSession,
+    InterviewTurn,
     Message,
     Resume,
     User,
@@ -180,6 +183,7 @@ app.include_router(chat_router)
 app.include_router(resume_router)
 app.include_router(recording_router)
 app.include_router(question_router)
+app.include_router(interview_router)
 app.include_router(profile_router)
 app.include_router(admin_router)
 

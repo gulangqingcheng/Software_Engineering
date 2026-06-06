@@ -9,6 +9,7 @@ from app.api.recording import router as recording_router
 from app.api.question import router as question_router
 from app.api.admin import router as admin_router
 from app.api.profile import router as profile_router
+from app.api.interview import router as interview_router
 
 __all__ = [
     "auth_router",
@@ -18,4 +19,5 @@ __all__ = [
     "question_router",
     "admin_router",
     "profile_router",
+    "interview_router",
 ]
