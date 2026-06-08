@@ -33,7 +33,12 @@ function goToAdmin() {
   router.push('/admin')
 }
 
+function goToInterview() {
+  router.push('/interview')
+}
+
 const isInAdmin = computed(() => route.path.startsWith('/admin'))
+const isInInterview = computed(() => route.path.startsWith('/interview'))
 
 async function handleDeleteConversation(e: Event, conversationId: number | string) {
   e.stopPropagation()
@@ -111,6 +116,16 @@ function plainPreview(text?: string | null) {
     </div>
 
     <div class="sidebar-footer">
+      <div
+        v-if="!appStore.sidebarCollapsed"
+        class="footer-item"
+        :class="{ active: isInInterview }"
+        @click="goToInterview"
+      >
+        <el-icon :size="18"><UserFilled /></el-icon>
+        <span>AI面试</span>
+      </div>
+
       <div
         v-if="authStore.isAdmin && !appStore.sidebarCollapsed"
         class="footer-item"

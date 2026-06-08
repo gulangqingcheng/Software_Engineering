@@ -1,6 +1,4 @@
-"""
-AI 面试相关 Pydantic Schema
-"""
+"""AI 面试相关 Pydantic Schema。"""
 
 from datetime import datetime
 from typing import Self
@@ -9,7 +7,7 @@ from pydantic import BaseModel, Field, model_validator
 
 
 class InterviewSessionCreateRequest(BaseModel):
-    """创建 AI 面试会话请求"""
+    """创建 AI 面试会话请求。"""
 
     title: str | None = Field(default=None, min_length=1, max_length=256, description="面试标题")
     target_position: str = Field(..., min_length=1, max_length=128, description="目标岗位")
@@ -20,11 +18,11 @@ class InterviewSessionCreateRequest(BaseModel):
 
 
 class InterviewAnswerRequest(BaseModel):
-    """提交面试回答请求"""
+    """提交面试回答请求。"""
 
     answer_text: str | None = Field(default=None, max_length=20000, description="文字回答")
     answer_audio_url: str | None = Field(default=None, max_length=512, description="音频回答地址")
-    answer_duration_seconds: int | None = Field(default=None, ge=0, description="回答时长（秒）")
+    answer_duration_seconds: int | None = Field(default=None, ge=0, description="回答时长，单位秒")
 
     @model_validator(mode="after")
     def validate_answer(self) -> Self:
@@ -34,7 +32,7 @@ class InterviewAnswerRequest(BaseModel):
 
 
 class InterviewTurnResponse(BaseModel):
-    """面试轮次响应"""
+    """面试轮次响应。"""
 
     id: int
     session_id: int
@@ -53,7 +51,7 @@ class InterviewTurnResponse(BaseModel):
 
 
 class InterviewSessionResponse(BaseModel):
-    """面试会话响应"""
+    """面试会话响应。"""
 
     id: int
     user_id: int
@@ -74,28 +72,38 @@ class InterviewSessionResponse(BaseModel):
 
 
 class InterviewSessionDetailResponse(InterviewSessionResponse):
-    """包含问答轮次的面试会话详情"""
+    """包含问答轮次的面试会话详情。"""
 
     turns: list[InterviewTurnResponse] = Field(default_factory=list)
 
 
 class InterviewTurnPerformance(BaseModel):
-    """报告中的单轮表现"""
+    """报告中的单轮表现。"""
 
     question_index: int
     question: str
+    answer: str | None = None
+    answer_duration_seconds: int | None = None
     score: float
+    dimensions: dict | None = None
+    evidence: list[str] = Field(default_factory=list)
+    missing_points: list[str] = Field(default_factory=list)
     feedback: str
     suggestion: str
 
 
 class InterviewReportResponse(BaseModel):
-    """面试报告响应"""
+    """面试报告响应。"""
 
     session_id: int
     total_score: float
     status: str
     summary: str
+    score_basis: str | None = None
+    dimension_scores: dict | None = None
     turn_performance: list[InterviewTurnPerformance] = Field(default_factory=list)
+    strengths: list[str] = Field(default_factory=list)
+    weaknesses: list[str] = Field(default_factory=list)
     suggestions: list[str] = Field(default_factory=list)
+    action_plan: list[str] = Field(default_factory=list)
     generated_at: datetime
