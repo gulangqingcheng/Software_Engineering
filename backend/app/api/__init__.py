@@ -1,15 +1,28 @@
-"""
-API 路由包
-"""
+"""API router package."""
 
-from app.api.auth import router as auth_router
-from app.api.chat import router as chat_router
-from app.api.resume import router as resume_router
-from app.api.recording import router as recording_router
-from app.api.question import router as question_router
-from app.api.admin import router as admin_router
-from app.api.profile import router as profile_router
-from app.api.interview import router as interview_router
+_ROUTER_MODULES = {
+    "auth_router": "auth",
+    "chat_router": "chat",
+    "resume_router": "resume",
+    "recording_router": "recording",
+    "question_router": "question",
+    "admin_router": "admin",
+    "profile_router": "profile",
+    "interview_router": "interview",
+}
+
+
+def __getattr__(name: str):
+    if name not in _ROUTER_MODULES:
+        raise AttributeError(name)
+
+    from importlib import import_module
+
+    module = import_module(f"app.api.{_ROUTER_MODULES[name]}")
+    router = module.router
+    globals()[name] = router
+    return router
+
 
 __all__ = [
     "auth_router",
