@@ -41,7 +41,10 @@ def hash_password(password: str) -> str:
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """验证密码是否匹配"""
-    return pwd_context.verify(plain_password, hashed_password)
+    # bcrypt 最大支持 72 字节，超出部分会被截断
+    # 为保持一致性，显式截断
+    password_bytes = plain_password.encode('utf-8')[:72]
+    return pwd_context.verify(password_bytes.decode('utf-8', errors='ignore'), hashed_password)
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
