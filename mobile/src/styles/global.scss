@@ -1,0 +1,168 @@
+page {
+  background-color: $bg-color;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: $font-md;
+  color: $text-color;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+.container {
+  min-height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + #{$tabbar-height});
+}
+
+.page-container {
+  padding: $spacing-md;
+  padding-top: calc(#{$header-height} + #{$spacing-md});
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-light {
+  color: $text-light;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+.mt-sm {
+  margin-top: $spacing-sm;
+}
+
+.mt-md {
+  margin-top: $spacing-md;
+}
+
+.mb-sm {
+  margin-bottom: $spacing-sm;
+}
+
+.mb-md {
+  margin-bottom: $spacing-md;
+}
+
+.mb-lg {
+  margin-bottom: $spacing-lg;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  
+  &-primary {
+    background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+    color: #fff;
+    box-shadow: 0 8rpx 24rpx rgba(99, 102, 241, 0.3);
+    
+    &:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+  }
+  
+  &-outline {
+    background: transparent;
+    border: 2rpx solid $primary-color;
+    color: $primary-color;
+    
+    &:active {
+      background: rgba(99, 102, 241, 0.1);
+    }
+  }
+  
+  &-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.card {
+  background: $bg-white;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-sm;
+}
+
+.input-group {
+  margin-bottom: $spacing-md;
+  
+  .label {
+    font-size: $font-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-xs;
+    display: block;
+  }
+  
+  .input {
+    width: 100%;
+    height: 88rpx;
+    padding: 0 $spacing-md;
+    border: 2rpx solid $border-color;
+    border-radius: $radius-md;
+    font-size: $font-md;
+    background: $bg-white;
+    
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+    }
+    
+    &::placeholder {
+      color: $text-placeholder;
+    }
+  }
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}

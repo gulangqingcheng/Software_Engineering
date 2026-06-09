@@ -1,0 +1,66 @@
+# Environment files with secrets
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+env/
+venv/
+.venv/
+.conda/
+backend/.env
+frontend/.env
+frontend/.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+backend/venv/
+backend/.venv/
+backend/chroma_db/
+backend/uploads/
+chroma_db/
+uploads/
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / frontend build
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+*.tsbuildinfo
+
+# Local caches and generated artifacts
+huggingface_cache/
+.cache/
+logs/
+artifacts/
+tmp_*_render/
+tmp-edge-profile*/
+tmp-edge-dom.html
+*.log
+
+# Office temporary files
+~$*.docx
+*.wbk
+
+# Competition packaging artifacts excluded from source submission
+传智杯项目/
+传智杯项目.zip
+传智杯ai大模型视频讲解.mp4
+作品介绍文档.docx
+示例/*.mp4
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

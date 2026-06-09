@@ -1,0 +1,81 @@
+name: interview-assistant
+
+services:
+  # MySQL database
+  db:
+    image: mysql:8.0
+    container_name: interview-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-interview123}
+      MYSQL_DATABASE: ${DB_NAME:-interview_assistant}
+      MYSQL_USER: ${DB_USER:-interview}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-interview123}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis cache
+  redis:
+    image: redis:7-alpine
+    container_name: interview-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: interview-backend
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - DATABASE_URL=mysql+pymysql://${DB_USER:-interview}:${DB_PASSWORD:-interview123}@db:3306/${DB_NAME:-interview_assistant}?charset=utf8mb4
+      - REDIS_URL=redis://redis:6379/0
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./artifacts:/app/artifacts
+      - ./chroma_db:/app/chroma_db
+      - ./knowledge_base:/app/knowledge_base
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        - VITE_API_BASE_URL=${VITE_API_BASE_URL:-/api}
+    container_name: interview-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
+  redis_data:
